@@ -9,6 +9,12 @@ A Neovim plugin to easily add co-authors to git commits using GitHub handles.
 - Insert co-author lines into commit messages
 - Session-based co-author management
 
+## Requirements
+
+- Neovim 0.5+
+- `gh` (GitHub CLI) installed and authenticated
+- Internet connection to fetch GitHub user data
+
 ## Installation
 
 ### Using [lazy.nvim](https://github.com/folke/lazy.nvim)
@@ -53,12 +59,6 @@ Co-authored-by: The Octocat <583231+octocat@users.noreply.github.com>
 ## Configuration
 
 The plugin works out of the box with no configuration needed.
-
-## Requirements
-
-- Neovim 0.5+
-- `gh` (GitHub CLI) installed and authenticated
-- Internet connection to fetch GitHub user data
 
 ## How It Works
 
