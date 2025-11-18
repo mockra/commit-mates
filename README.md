@@ -47,7 +47,7 @@ Type the GitHub handle (with or without @), press Enter, and it will automatical
 co-author line in Git's standard format:
 
 ```
-Co-authored-by: The Octocat <octocat@users.noreply.github.com>
+Co-authored-by: The Octocat <583231+octocat@users.noreply.github.com>
 ```
 
 ## Configuration

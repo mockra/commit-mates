@@ -46,7 +46,8 @@ function M.add_coauthor(handle)
   -- GitHub users may not have a public email, use noreply email
   local email = user_data.email
   if not email or email == vim.NIL or email == vim.null then
-    email = string.format("%s@users.noreply.github.com", handle)
+    -- Use ID-based noreply format (works for all accounts)
+    email = string.format("%s+%s@users.noreply.github.com", user_data.id, handle)
   end
 
   -- Create co-author string
