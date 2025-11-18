@@ -79,9 +79,6 @@ function M.insert_coauthors()
 
   local lines = {}
 
-  -- Add blank line separator
-  table.insert(lines, "")
-
   -- Add all co-author lines
   for _, coauthor in ipairs(M.coauthors) do
     table.insert(lines, coauthor.line)
