@@ -25,7 +25,7 @@ local function fetch_github_user(handle)
 end
 
 -- Add a co-author by GitHub handle
-function M.add_coauthor(handle)
+local function add_single_coauthor(handle)
   -- Remove @ if present
   handle = handle:gsub("^@", "")
 
@@ -35,12 +35,12 @@ function M.add_coauthor(handle)
 
   if err then
     vim.notify("Error: " .. err, vim.log.levels.ERROR)
-    return
+    return false
   end
 
   if not user_data.name then
     vim.notify("Error: User missing name", vim.log.levels.ERROR)
-    return
+    return false
   end
 
   -- GitHub users may not have a public email, use noreply email
@@ -62,12 +62,35 @@ function M.add_coauthor(handle)
   for _, existing in ipairs(M.coauthors) do
     if existing.handle == handle then
       vim.notify("Co-author already added: " .. coauthor.line, vim.log.levels.WARN)
-      return
+      return false
     end
   end
 
   table.insert(M.coauthors, coauthor)
   vim.notify("Added co-author: " .. coauthor.line, vim.log.levels.INFO)
+  return true
+end
+
+-- Add co-author(s) by GitHub handle(s) - supports comma-separated list
+function M.add_coauthor(handles)
+  -- Split by comma and trim whitespace
+  local handle_list = {}
+  for handle in handles:gmatch("[^,]+") do
+    local trimmed = handle:match("^%s*(.-)%s*$")
+    if trimmed ~= "" then
+      table.insert(handle_list, trimmed)
+    end
+  end
+
+  if #handle_list == 0 then
+    vim.notify("No valid handles provided", vim.log.levels.WARN)
+    return
+  end
+
+  -- Process each handle
+  for _, handle in ipairs(handle_list) do
+    add_single_coauthor(handle)
+  end
 end
 
 -- Insert co-authors into current buffer (for commit message)
@@ -108,7 +131,7 @@ function M.open_window()
     row = math.floor((vim.o.lines - height) / 2),
     style = 'minimal',
     border = 'rounded',
-    title = ' Enter GitHub Handle ',
+    title = ' Enter GitHub Handle(s) ',
     title_pos = 'center',
   }
 
