@@ -70,19 +70,6 @@ function M.add_coauthor(handle)
   vim.notify("Added co-author: " .. coauthor.line, vim.log.levels.INFO)
 end
 
--- List current co-authors
-function M.list_coauthors()
-  if #M.coauthors == 0 then
-    vim.notify("No co-authors added yet", vim.log.levels.INFO)
-    return
-  end
-
-  vim.notify("Current co-authors:", vim.log.levels.INFO)
-  for i, coauthor in ipairs(M.coauthors) do
-    print(string.format("  %d. %s", i, coauthor.line))
-  end
-end
-
 -- Insert co-authors into current buffer (for commit message)
 function M.insert_coauthors()
   if #M.coauthors == 0 then
@@ -92,22 +79,17 @@ function M.insert_coauthors()
 
   local lines = {}
 
-  -- Add blank line separator if buffer is not empty
-  local current_line = vim.fn.line('.')
-  local last_line = vim.fn.line('$')
-  local last_line_content = vim.fn.getline(last_line)
-
-  if last_line_content ~= "" then
-    table.insert(lines, "")
-  end
+  -- Add blank line separator
+  table.insert(lines, "")
 
   -- Add all co-author lines
   for _, coauthor in ipairs(M.coauthors) do
     table.insert(lines, coauthor.line)
   end
 
-  -- Insert at the end of the buffer
-  vim.fn.append(last_line, lines)
+  -- Insert at line below cursor
+  local current_line = vim.fn.line('.')
+  vim.fn.append(current_line, lines)
 
   vim.notify(string.format("Inserted %d co-author(s)", #M.coauthors), vim.log.levels.INFO)
 
