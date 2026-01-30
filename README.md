@@ -2,6 +2,10 @@
 
 A Neovim plugin to easily add co-authors to git commits using GitHub handles.
 
+<img width="561" height="165" alt="Screenshot 2026-01-29 at 7 29 00 PM" src="https://github.com/user-attachments/assets/992ed64d-3754-4ce8-ba52-f9ba59578b74" />
+
+> Co-authored-by: David Ratajczak <mockra@github.com>
+
 ## Features
 
 - Fetch GitHub user information automatically
